@@ -11,7 +11,7 @@ export interface Task {
   entity: string;
   status: string;
   type: string;
-  notes: string;
+  notes?: string;
   createdTime?: string;
 }
 

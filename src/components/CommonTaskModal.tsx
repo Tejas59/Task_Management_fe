@@ -16,9 +16,21 @@ const CommonTaskModal: React.FC<{
       notes: "",
     }
   );
-  console.log({ addTaskObj });
+
   const [statusButtonSelect, setStatusButtonSelect] = useState<string>("Open");
   const [openTaskTypeOption, setOpenTaskTypeOption] = useState<boolean>(false);
+
+  const validateTask = (task: Task): string[] => {
+    const errors: string[] = [];
+
+    if (!task.contactPerson.trim()) errors.push("Contact Person is required.");
+    if (!task.type.trim()) errors.push("Task Type is required.");
+    if (!task.status.trim()) errors.push("Status is required.");
+    if (!task.date.trim()) errors.push("Date is required.");
+    if (!task.entity.trim()) errors.push("Entity is required.");
+
+    return errors;
+  };
   return (
     <div className="h-fit w-[25rem] bg-gray-50  p-[30px]">
       <div className="flex justify-between w-full">
@@ -208,6 +220,15 @@ const CommonTaskModal: React.FC<{
         </button>
         <button
           onClick={async () => {
+            const errors = validateTask({
+              ...addTaskObj,
+              status: statusButtonSelect,
+            });
+
+            if (errors.length > 0) {
+              alert(errors.join("\n"));
+              return;
+            }
             const res = await fetch(
             `${process.env.NEXT_PUBLIC_API_BASE}/${task ? `edit/${task._id}` : "add"}`,
               {
