@@ -1,10 +1,9 @@
-import NewTaskModal from "@/components/NewTaskModal";
-// import Image from "next/image";
+import TaskTable from "@/components/TaskTable";
 
 export default function Home() {
   return (
-    <div className="flex items-center justify-center min-h-screen">
-      <NewTaskModal />
+    <div className="flex items-center justify-center h-screen">
+      <TaskTable />
     </div>
   );
 }
